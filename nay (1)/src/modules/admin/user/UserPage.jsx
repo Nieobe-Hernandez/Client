@@ -6,7 +6,7 @@ import { IoIosAdd } from "react-icons/io";
 import RegisterUserForm from './components/RegistroUserForm';
 import UpdateUserForm from './components/UpdateUserForm';
 import { MdEdit } from "react-icons/md";
-import { FaUserSlash } from "react-icons/fa6";
+import { TbUserExclamation } from "react-icons/tb";
 import { confirmAlert,customAlert } from '../../../config/alerts/alert';
 const UserPage = () => {
 
@@ -99,7 +99,7 @@ const UserPage = () => {
                 <>
                     <Button outline color='warning' onClick={()=> handleClickEdit(row)} pill><MdEdit size={24}/></Button>
                     <UpdateUserForm isEditing={isEditing} setIsEditing={setIsEditing} getAllUsers={getUsers} selectedUser={selectedUser}/>
-                    <Button outline color='failure' pill onClick={()=> changeStatus(row)}><FaUserSlash size={24}/></Button>
+                    <Button outline color='failure' pill onClick={()=> changeStatus(row)}><TbUserExclamation size={24}/></Button>
                 </>
             ),
         },
@@ -132,7 +132,8 @@ const UserPage = () => {
                     <Label htmlFor='' />
                     <TextInput type='text' id='filter' placeholder='Buscar...' />
                 </div>
-                <Button outline color='success' onClick={()=> setIsCreating(true)} pill><IoIosAdd size={24}/></Button>
+                <Button outline color='success' onClick={()=> setIsCreating(true)} pill>
+                <IoIosAdd size={24}/></Button>
                 <RegisterUserForm isCreating={isCreating} setIsCreating={setIsCreating} getAllUsers={getUsers}/>
             </div>
             <Card>
