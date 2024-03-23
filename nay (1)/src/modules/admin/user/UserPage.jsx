@@ -4,24 +4,22 @@ import CustomDataTable from '../../../components/CustomDataTable'
 import AxiosClient from '../../../config/http-client/axios-client';
 import { IoIosAdd } from "react-icons/io";
 import RegisterUserForm from './components/RegistroUserForm';
-import UpdateUserForm from './components/UpdateUserForm';
+import UpdateUserForm from './components/UpdateUserForm'; 
 import { MdEdit } from "react-icons/md";
 import { TbUserExclamation } from "react-icons/tb";
-import { confirmAlert,customAlert } from '../../../config/alerts/alert';
-const UserPage = () => {
+import { confirmAlert, customAlert } from '../../../config/alerts/alert';
 
+const UserPage = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const [filterText, setFilterText] = useState('');
     const [users, setUsers] = useState([]);
     const [isCreating, setIsCreating] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-
     const handleClickEdit = (user) => {
         setSelectedUser(user);
         setIsEditing(true);
     };
-
     const changeStatus = async (row) => {
         console.log(row);
         confirmAlert(async () => {
@@ -55,7 +53,6 @@ const UserPage = () => {
           }
         });
       }
-
     const columns = useMemo(() => [
         {
             name: '#',
@@ -96,16 +93,26 @@ const UserPage = () => {
         {
             name: 'Acciones',
             cell: (row) => (
-                <>
-                    <Button outline color='warning' onClick={()=> handleClickEdit(row)} pill><MdEdit size={24}/></Button>
-                    <UpdateUserForm isEditing={isEditing} setIsEditing={setIsEditing} getAllUsers={getUsers} selectedUser={selectedUser}/>
-                    <Button outline color='failure' pill onClick={()=> changeStatus(row)}><TbUserExclamation size={24}/></Button>
-                </>
+              <>
+                <Button outline color='warning' onClick={() => handleClickEdit(row)} pill>
+                  <MdEdit size={24} />
+                </Button>
+                {isEditing && (
+                  <UpdateUserForm
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    getAllUsers={getUsers}
+                    selectedUser={selectedUser} 
+                  />
+                )}
+                <Button outline color='failure' pill onClick={() => changeStatus(row)}>
+                  <TbUserExclamation size={24} />
+                </Button>
+              </>
             ),
-        },
-    ])
+          },
+    ]);
     //useMemo guarda como un cache para no renderizar varias veces
-
     const getUsers = async () => {
         try {
             const response = await AxiosClient({ url: "/user/", method: 'GET' });
@@ -123,7 +130,6 @@ const UserPage = () => {
         setLoading(true);
         getUsers();
     }, []); //Solo se ejecuta una vez al terminar de renderizar
-
     return (
         <section className='w-full px-4 pt-4 flex flex-col gap-4'>
             <h1 className='text-2xl'>Usuarios</h1>
